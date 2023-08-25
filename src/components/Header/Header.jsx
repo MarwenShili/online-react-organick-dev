@@ -5,6 +5,7 @@ import CartHeader from "../CartHeader/CartHeader";
 import Menu from "../Menu/Menu";
 import Search from "../Search/Search";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,12 +13,12 @@ function Header() {
     <header className="header">
       <div className="header_content">
         <div className="s_left">
-          <a href="/" className="logo">
+          <NavLink to="/" className="logo">
             <img src={logo} alt="" />
-          </a>
+          </NavLink>
           <div className="navigations">
-            <a to="/">Home</a>
-            <a to="/login">Login</a>
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/login">Login</NavLink>
           </div>
         </div>
         <div className="s_right">

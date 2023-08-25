@@ -1,0 +1,6 @@
+.card {
+  border: 1px solid #000;
+  padding: 20px;
+  border-radius: 12px;
+  cursor: pointer;
+}

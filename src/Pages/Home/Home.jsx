@@ -1,23 +1,38 @@
 import React from "react";
 import bannerImg from "../../assets/icons/Banner.svg";
 import "./Home.css";
+import CardProduct from "../../components/CardProduct/CardProduct";
+
 function Home() {
-  //here you can declare the products array => 7/
+  let products = [
+    {
+      id: "2",
+      name: "Product 1",
+      description: "description of product 1",
+      price: 10,
+      imgUrl: "",
+      review: 4,
+      discountPrice: 3,
+      quantity: 3,
+    },
+    {
+      id: "1",
+      name: "Product 2",
+      description: "description of product 2",
+      price: 20,
+      imgUrl: "",
+      review: 5,
+      discountPrice: 10,
+      quantity: 9,
+    },
+  ];
   return (
     <div className="home_page">
       <img className="banner_img" src={bannerImg} alt="" />
       <div className="content">
-        try here
-        {/*
-       code of cards here
-       1/ create a folder named Card in the component folder
-       2/ create Card.jsx and Card.css in the Card component 
-       3/ export the Card component with "export default Card"
-       4/ import the Card component in Home.jsx 
-       5/ put the Card component in the content 
-       6/ in Home.jsx create an array named products of 5 objects each object has  id :string, image :string, name : string , description : string , newPrice : number , oldPrice : number ,category : string , rate : number
-       7/ in Home.jsx in the jsx part (html) map the array of products and in each iteration call the Card Component and pass the object as a props 
-      */}
+        {products.map((product) => (
+          <CardProduct key={product.id} product={product} />
+        ))}
       </div>
     </div>
   );
