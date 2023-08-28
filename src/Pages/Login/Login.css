@@ -1,0 +1,30 @@
+.login_page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  gap: 20px;
+}
+.login_page form {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+.login_page form input {
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid black;
+  width: 400px;
+  padding: 0 10px;
+}
+.error_msg {
+  color: red;
+}
+.error {
+  border: 1px solid red !important;
+}
+
+input:focus {
+  outline: none;
+}

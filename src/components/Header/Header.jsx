@@ -6,9 +6,14 @@ import Menu from "../Menu/Menu";
 import Search from "../Search/Search";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-
+import { useContext } from "react";
+import { AuthContext } from "../../App";
 function Header() {
+  const auth = useContext(AuthContext);
+  const { isLoggedIn } = auth;
+
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <header className="header">
       <div className="header_content">
@@ -18,7 +23,16 @@ function Header() {
           </NavLink>
           <div className="navigations">
             <NavLink to="/">Home</NavLink>
-            <NavLink to="/login">Login</NavLink>
+            {isLoggedIn ? (
+              <>
+                <NavLink to="/profile">Profile</NavLink>
+                <NavLink onClick={() => auth.setIsLoggedIn(false)} to="/login">
+                  Logout
+                </NavLink>
+              </>
+            ) : (
+              <NavLink to="/login">Login</NavLink>
+            )}
           </div>
         </div>
         <div className="s_right">

@@ -4,21 +4,33 @@ import Header from "./components/Header/Header";
 import Home from "./Pages/Home/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProductDetails from "./Pages/ProductDetails/ProductDetails";
+import React, { useState } from "react";
+import ProfilePage from "./Pages/ProfilePage/ProfilePage";
+import Login from "./Pages/Login/Login";
+
+export const AuthContext = React.createContext();
 
 function App() {
-  return (
-    <BrowserRouter>
-      <div className="App">
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<h1>Login</h1>} />
-          <Route path="/products/:id" element={<ProductDetails />} />
-        </Routes>
+  let usr = { id: 1, name: "marwen shili", email: "marwen@gmail.com" };
+  const [user, setUser] = useState(usr);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-        <Footer />
-      </div>
-    </BrowserRouter>
+  return (
+    <AuthContext.Provider value={{ user, setIsLoggedIn, isLoggedIn }}>
+      <BrowserRouter>
+        <div className="App">
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/profile" element={<ProfilePage />} />
+          </Routes>
+
+          <Footer />
+        </div>
+      </BrowserRouter>
+    </AuthContext.Provider>
   );
 }
 
