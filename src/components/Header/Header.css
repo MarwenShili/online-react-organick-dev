@@ -33,7 +33,6 @@ header .navigations {
   width: 100%;
 }
 header .navigations a {
-  color: red;
   font-weight: 700;
   font-size: 20px;
   line-height: 23px;
@@ -90,4 +89,20 @@ header .navigations a {
   header .menu {
     display: block;
   }
+}
+.theme_mode img {
+  width: 90px;
+  margin-right: 6px;
+}
+
+.dark {
+  background-color: black;
+  color: #fff !important;
+}
+.dark .navigations a {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 23px;
+  color: #fff;
+  text-decoration: none;
 }

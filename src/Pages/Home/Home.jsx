@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import bannerImg from "../../assets/icons/Banner.svg";
 import "./Home.css";
 import CardProduct from "../../components/CardProduct/CardProduct";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 function Home() {
+  const themeValues = useContext(ThemeContext);
   let products = [
     {
       id: "2",
@@ -27,7 +29,9 @@ function Home() {
     },
   ];
   return (
-    <div className="home_page">
+    <div
+      className={themeValues.theme === "light" ? "home_page" : "home_page dark"}
+    >
       <img className="banner_img" src={bannerImg} alt="" />
       <div className="content">
         {products.map((product) => (
