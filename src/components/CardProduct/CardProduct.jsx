@@ -4,15 +4,26 @@ import { useNavigate } from "react-router-dom";
 import { Card } from "antd";
 import cartIcon from "../../assets/icons/cart.svg";
 import { Rate } from "antd";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../store/slices/cartSlice";
 
 const { Meta } = Card;
 
 function CardProduct({ product }) {
   const navigate = useNavigate();
-  console.log(product);
+  const dispatch = useDispatch();
 
   const HandleNavigate = () => {
     navigate(`/products/${product.id}`, { state: product });
+  };
+  const AddItemToCart = (e) => {
+    e.stopPropagation();
+    dispatch(
+      addToCart({
+        ...product,
+        count: 1,
+      })
+    );
   };
   return (
     <Card
@@ -24,7 +35,12 @@ function CardProduct({ product }) {
         <img alt="example" src={product.attributes.image.data.attributes.url} />
       }
       className="new_card"
-      title={<HeaderCard category={product.attributes.type} />}
+      title={
+        <HeaderCard
+          category={product.attributes.type}
+          handleAdd={AddItemToCart}
+        />
+      }
     >
       <Meta title={product.attributes.name} />
       <div className="prices">
@@ -49,11 +65,11 @@ function CardProduct({ product }) {
 
 export default CardProduct;
 
-const HeaderCard = ({ category }) => {
+const HeaderCard = ({ category, handleAdd }) => {
   return (
     <div className="header_card">
       <p className="category">{category}</p>
-      <span>
+      <span onClick={handleAdd}>
         <img src={cartIcon} alt="" />
       </span>
     </div>

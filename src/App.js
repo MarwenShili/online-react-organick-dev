@@ -8,6 +8,7 @@ import React, { useContext, useState } from "react";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 import Login from "./Pages/Login/Login";
 import ThemeProvider from "./contexts/ThemeContext";
+import CartPage from "./Pages/CartPage/CartPage";
 
 export const AuthContext = React.createContext();
 
@@ -26,6 +27,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/products/:id" element={<ProductDetails />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/cart" element={<CartPage />} />
             </Routes>
 
             <Footer />
