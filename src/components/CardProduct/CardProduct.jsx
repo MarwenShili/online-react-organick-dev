@@ -1,19 +1,24 @@
 import React from "react";
 import "./CardProduct.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Card } from "antd";
 import cartIcon from "../../assets/icons/cart.svg";
 import { Rate } from "antd";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../store/slices/cartSlice";
+import { addToCart, removeFromCart } from "../../store/slices/cartSlice";
+import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 
 const { Meta } = Card;
 
 function CardProduct({ product }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const HandleNavigate = () => {
+    if (location.pathname.includes("cart")) {
+      return;
+    }
     navigate(`/products/${product.id}`, { state: product });
   };
   const AddItemToCart = (e) => {
@@ -24,6 +29,10 @@ function CardProduct({ product }) {
         count: 1,
       })
     );
+  };
+
+  const handleRemove = (id) => {
+    dispatch(removeFromCart(id));
   };
   return (
     <Card
@@ -40,6 +49,20 @@ function CardProduct({ product }) {
           category={product.attributes.type}
           handleAdd={AddItemToCart}
         />
+      }
+      actions={
+        location.pathname.includes("cart")
+          ? [
+              <PlusOutlined onClick={AddItemToCart} />,
+              <p>{product?.count}</p>,
+              <MinusOutlined
+                onClick={(e) => {
+                  handleRemove(product.id);
+                  e.stopPropagation();
+                }}
+              />,
+            ]
+          : null
       }
     >
       <Meta title={product.attributes.name} />
