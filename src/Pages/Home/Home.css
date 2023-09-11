@@ -10,3 +10,8 @@
   flex-wrap: wrap;
   padding: 50px 100px;
 }
+
+.content h1 {
+  width: 100%;
+  text-align: center;
+}

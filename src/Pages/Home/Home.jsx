@@ -3,26 +3,18 @@ import bannerImg from "../../assets/icons/Banner.svg";
 import "./Home.css";
 import CardProduct from "../../components/CardProduct/CardProduct";
 import { ThemeContext } from "../../contexts/ThemeContext";
-let URL = "https://api5odhra.zitouna.tech/api/products?populate=deep,4";
+import { useSelector, useDispatch } from "react-redux";
+import { getProducts } from "../../store/slices/productsSlice";
 
 function Home() {
   const themeValues = useContext(ThemeContext);
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
 
-  function fetchData() {
-    fetch(URL)
-      .then((response) => response.json())
-      .then((res) => setProducts(res.data))
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  const { products, isLoading } = useSelector((state) => state.products);
 
   useEffect(() => {
-    fetchData();
+    dispatch(getProducts());
   }, []);
-
-  console.log(products);
 
   return (
     <div
@@ -33,6 +25,7 @@ function Home() {
         {products.map((product) => (
           <CardProduct key={product.id} product={product} />
         ))}
+        {isLoading && <h1>Loading ...</h1>}
         {products.length === 0 && <h1>Not Data Found</h1>}
       </div>
     </div>
