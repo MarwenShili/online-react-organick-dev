@@ -31,7 +31,13 @@ function Header() {
             {isLoggedIn ? (
               <>
                 <NavLink to="/profile">Profile</NavLink>
-                <NavLink onClick={() => auth.setIsLoggedIn(false)} to="/login">
+                <NavLink
+                  onClick={() => {
+                    auth.setIsLoggedIn(false);
+                    localStorage.removeItem("organick_token");
+                  }}
+                  to="/login"
+                >
                   Logout
                 </NavLink>
               </>

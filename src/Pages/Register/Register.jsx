@@ -1,14 +1,16 @@
 import React, { useContext, useState } from "react";
-import "./Login.css";
+import "../Login/Login.css";
 import { AuthContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../store/slices/authSlice";
+import { register } from "../../store/slices/authSlice";
 import { Button, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+
 var emailRegex =
   /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,40}$/;
+
 const antIcon = (
   <LoadingOutlined
     style={{
@@ -17,16 +19,20 @@ const antIcon = (
     spin
   />
 );
-function Login() {
+
+function Register() {
   const auth = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const { isLoading, error } = useSelector((state) => state.auth);
+
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(null);
+
+  const [username, setUserName] = useState("");
+
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState(null);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const { isLoading, error } = useSelector((state) => state.auth);
 
   const validateEmail = (value) => {
     if (emailRegex.test(value)) {
@@ -40,7 +46,7 @@ function Login() {
     if (passwordRegex.test(value)) {
       setPasswordError(null);
     } else {
-      setPasswordError("Password is not value");
+      setPasswordError("Password is not valid");
     }
   };
 
@@ -53,20 +59,34 @@ function Login() {
   const handlePassword = (e) => {
     let value = e.target.value;
     setPassword(value);
-    // // validatePassword(value);
+    // validatePassword(value);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!emailError && !passwordError) {
-      dispatch(login({ identifier: email, password }));
+      console.log("success");
+      //   auth.setIsLoggedIn(true);
+      //   navigate("/");
+
+      dispatch(register({ username, email, password }));
     } else {
       console.log("error");
     }
   };
   return (
     <div className="login_page">
-      <h3>Login</h3>
+      <h3>Register</h3>
       <form action="" onSubmit={handleSubmit}>
+        <div>
+          <input
+            name="username"
+            value={username}
+            type="text"
+            placeholder="enter your username"
+            onChange={(e) => setUserName(e.target.value)}
+          />
+        </div>
         <div>
           <input
             type="email"
@@ -96,11 +116,10 @@ function Login() {
             "Submit"
           )}
         </Button>
-        <p className="error_msg">{error}</p>{" "}
+        <p className="error_msg">{error}</p>
       </form>
-      <a href="/register">Register</a>
     </div>
   );
 }
 
-export default Login;
+export default Register;
